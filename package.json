@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^6.0.0-15",
+    "laravel-elixir-vue-2": "^0.3.0",
+    "laravel-elixir-webpack-official": "^1.0.10",
+    "pixi.js": "^4.4.1",
+    "vue": "^2.2.1",
+    "vue-loader": "^11.1.4",
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
+  }
+}

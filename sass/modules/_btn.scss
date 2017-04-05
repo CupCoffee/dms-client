@@ -1,0 +1,21 @@
+.btn {
+	display: inline-block;
+	cursor: pointer;
+
+	&--primary {
+		box-shadow: 0 2px 0 0 rgba(1, 68, 92, .06);
+		background-color: $white;
+		padding: 5px 10px;
+		color: $black;
+	}
+
+	&--hover {
+		transition: .2s transform;
+		backface-visibility: hidden;
+		transform: translateZ(0) scale(1.0);
+
+		&:hover {
+			transform: scale(1.1);
+		}
+	}
+}

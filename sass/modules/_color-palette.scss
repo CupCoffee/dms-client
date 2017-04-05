@@ -1,0 +1,41 @@
+$color-size: 50px;
+
+.color-palette {
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 10px;
+
+	&__color {
+		position: relative;
+		float: left;
+		box-sizing: border-box;
+		border-radius: 3px;
+		width: $color-size;
+		height: $color-size;
+		margin: 0 $color-size/10;
+		transition: transform .2s;
+		background-color: currentColor;
+		cursor: pointer;
+		pointer-events: auto;
+
+		&--active, &:hover {
+			transform: scale(1.1);
+
+			&:active {
+				transform: scale(0.9);
+			}
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			border-bottom: 3px solid rgba($black, 0.1);
+			border-radius: 3px;
+		}
+	}
+}

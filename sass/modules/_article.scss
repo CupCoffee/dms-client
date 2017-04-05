@@ -1,0 +1,57 @@
+$padding: 20px;
+$bookmark-color: #AA0000;
+
+.article {
+	margin: 40px 0;
+
+	&__header {
+		margin: 0 $padding;
+		background-color: $white;
+		border-radius: 3px 3px 0 0;
+		box-shadow: 2px 0 0 0 rgba(1, 68, 92, .06);
+		display: inline-block;
+	}
+
+	&__title {
+		display: inline-block;
+		padding: 0 $padding;
+		margin: 0;
+	}
+
+	&__body {
+		padding: $padding;
+		box-shadow: 2px 2px 0 0 rgba(1, 68, 92, .06);
+		background-color: $white;
+		border-radius: 0 3px 3px 3px;
+		transition: .2s all;
+	}
+
+	&__footer {
+		position: relative;
+		padding: 0 $padding;
+
+		.btn--read-more {
+			position: relative;
+			float: right;
+			clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+			background-color: $bookmark-color;
+			display: block;
+			width: 50px;
+			color: $white;
+
+			&::before {
+				padding-top: 150%;
+				content: '';
+				display: inline-block;
+			}
+
+			.fa {
+				position: absolute;
+				left: 50%;
+				top: 37.5%;
+				transform: translate(-50%, -50%);
+				font-size: x-large;
+			}
+		}
+	}
+}

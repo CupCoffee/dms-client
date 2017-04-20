@@ -1,0 +1,31 @@
+.chat {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 1rem;
+
+	&__box {
+		overflow-y: scroll;
+		max-height: 100%;
+	}
+
+	&__message {
+		background-color: $white;
+		box-shadow: 0 2px 0 0 $dark-gray;
+		padding: 10px;
+		margin-bottom: 1rem;
+		border-radius: 3px;
+	}
+}
+
+.message {
+	&__author {
+		color: $light-gray;
+		font-size: 0.9rem;
+	}
+
+	&__content {
+
+	}
+}

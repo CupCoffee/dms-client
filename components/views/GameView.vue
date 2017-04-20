@@ -1,9 +1,11 @@
 <template>
     <div class="view view-game">
-        <canvas v-pixi="drawCanvasSettings" @mousedown="pencil.startDrawing($event.pageX, $event.pageY)" @mousemove="pencil.draw($event.pageX, $event.pageY)" @mouseup="pencil.stopDrawing($event.pageX, $event.pageY)"></canvas>
+        <canvas class="drawing-canvas" v-pixi="drawCanvasSettings" @mousedown="pencil.startDrawing($event.pageX, $event.pageY)" @mousemove="pencil.draw($event.pageX, $event.pageY)" @mouseup="pencil.stopDrawing($event.pageX, $event.pageY)"></canvas>
         <div class="ui-overlay">
             <canvas v-pixi="renderCanvasSettings"></canvas>
             <color-palette></color-palette>
+            <chat-box></chat-box>
+            <chat></chat>
         </div>
     </div>
 </template>
@@ -11,13 +13,20 @@
 <script>
     import { autoDetectRenderer, Graphics, Container, Sprite } from 'pixi.js';
     import { extend } from 'underscore';
-    import io from 'socket.io-client';
-    import Pencil from "../../src/drawing/Pencil";
-    import ColorPalette from "../ui/ColorPalette.vue";
     import { mapGetters } from 'vuex';
+
+    import { GameSocket } from '../../src/net/Socket';
+
+    import ColorPalette from "../ui/ColorPalette.vue";
+    import ChatBox from "../ui/chat/ChatBox.vue";
+    import Chat from "../ui/chat/Chat.vue";
+    import PlayerPencil from "../../src/drawing/PlayerPencil";
+    import OtherPencil from "../../src/drawing/OtherPencil";
 
     export default {
     	components: {
+    		Chat,
+    		ChatBox,
     		ColorPalette
         },
 
@@ -33,7 +42,7 @@
                     height: window.innerHeight,
                     transparent: true,
                     renderSetupCallback(renderer) {
-    					let pencilScale = 0.1
+    					let pencilScale = 0.1;
 	                    let pencilSprite = Sprite.fromImage('assets/pencil.png');
 	                    pencilSprite.scale.set(pencilScale, pencilScale);
 	                    pencilSprite.anchor.set(pencilSprite.width / pencilScale, pencilSprite.height / pencilScale / 2);
@@ -100,9 +109,17 @@
     		setupRenderer(renderer) {
 			    let stage = new Container();
 
-			    this.pencil = new Pencil(stage);
+			    this.pencil = new PlayerPencil(renderer, stage);
 
-			    renderer.render(stage);
+			    let otherPencils = {};
+
+			    GameSocket.on('draw', function(packet) {
+				    if (packet.id && !(packet.id in otherPencils)) {
+					    otherPencils[packet.id] = new OtherPencil(renderer, stage);
+				    }
+
+				    otherPencils[packet.id].handlePacket(packet);
+                });
 
 			    let render = () => {
 				    renderer.render(stage);
@@ -110,7 +127,7 @@
 				    requestAnimationFrame(render);
 			    };
 
-			    requestAnimationFrame(render);
+			    render();
             }
         }
     }

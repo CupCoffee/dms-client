@@ -1,0 +1,48 @@
+.chat-box {
+	position: absolute;
+	left: 50%;
+	bottom: 1rem;
+	transform: translateX(-50%);
+
+	&__input, &__button {
+		pointer-events: all;
+		float: left;
+	}
+
+	&__input {
+		resize: none;
+		border-radius: 3px;
+		line-height: 1em;
+		margin: 0;
+		padding-right: 2rem;
+
+		&, &:focus {
+			border: 0;
+			box-shadow: 0 2px 0 0 $dark-gray;
+		}
+	}
+
+	&__button {
+		position: absolute;
+		top: 50%;
+		right: .5rem;
+		transform: translateY(-50%);
+		color: rgba($black, .5);
+		cursor: pointer;
+		outline: 0;
+		height: 100%;
+		text-align: center;
+
+		.fa {
+			transition: all .2s;
+
+			&:hover {
+				font-size: 1.1em;
+			}
+
+			&:active {
+				font-size: 0.9em;
+			}
+		}
+	}
+}
